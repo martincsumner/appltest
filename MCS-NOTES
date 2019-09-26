@@ -1,0 +1,5 @@
+	src/main/resources/.ssh/arcadiams.pub
+
+
+
+ sftp -i ./src/main/resources/.ssh/arcadiams  marftp@192.168.168.66
