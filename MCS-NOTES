@@ -3,3 +3,44 @@
 
 
  sftp -i ./src/main/resources/.ssh/arcadiams  marftp@192.168.168.66
+
+
+
+
+ Just a quick note to say thanks for your help…
+
+ Turned out to be an issue within the underlying library that does the SSH/SFTP rsa auth.
+
+ I had come to the fix you gave me on my own as well - but I kept getting a bad key exception. - and that threw me off the scent.
+
+ I had ssh-keygen ‘d created a pair of keys.
+
+ Added them to the remote host, tested the connection from the command line — all good.
+
+ Then picking up the private key and running from within camel == boom + bad key exception ?!
+
+
+ Cut an afternoon of teeth knashing short:
+ ===============================
+
+ -----BEGIN OPENSSH PRIVATE KEY-----
+ b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAABFwAAAAdzc2gtcn
+
+ Is how the key becomes generated from a straight keygen as above (which works from the command line perfectly).
+
+ But you have to do keygen -t rsa -m PEM
+
+ then you get a header that looks like this:
+
+ -----BEGIN RSA PRIVATE KEY-----
+ MIIEogIBAAKCAQEA4aGquf7h5ZKLtMSVrFaBa1EIXQ85
+
+ …and this one works!!! — without the "-m PEM” it does not work.
+
+ f. sake I am too old for this shit - and this was just the easy bit the real climb is still in front of me.
+
+ Do you reckon this is worth blogging for the next lost soul who stumbles into this?
+ ...Or is this common knowledge for all the people that do this professionally?
+
+
+ M
